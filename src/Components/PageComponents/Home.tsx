@@ -1,3 +1,4 @@
+import { PetDisplay } from "../FeatureComponents/PetDisplay";
 import VaccinationContainer from "../FeatureComponents/VaccinationContainer";
 
 function Home () {
@@ -15,9 +16,9 @@ function Home () {
 
 
     return (
-        <div className="flex flex-col w-full lg:w-1/4">
+        <div className="flex flex-col w-full lg:w-1/4 m-6 lg:mx-40 gap-4">
             <h1 className="text-3xl font-bold underline">Welcome</h1>
-            <p>fotos pets</p>
+            <PetDisplay />
             <VaccinationContainer 
             vaccineName={vaccinationInfo.name}
             vaccinationDate={vaccinationInfo.date}
