@@ -1,7 +1,7 @@
 export interface VaccineProps  {
-    vaccineName: String,
-    vaccineManufacturer: String,
-    vaccineBatchNumber: String
+    vaccineName: string,
+    vaccineManufacturer: string,
+    vaccineBatchNumber: string
 }
 export function VaccineInfo( {vaccineName, vaccineManufacturer, vaccineBatchNumber}: VaccineProps) {
     return (

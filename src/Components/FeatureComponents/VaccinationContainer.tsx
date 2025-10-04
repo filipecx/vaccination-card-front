@@ -3,13 +3,13 @@ import { VaccineInfo } from "./VaccineInfo";
 import { VeterinarianInfo } from "./VeterinarianInfo";
 
 interface VaccinationProps {
-    vaccineName: String,
-    vaccineBatchNumber: String,
-    vaccineManufacturer: String,
-    vaccinationDate: String,
-    nextShot: String,
-    veterinarianName: String,
-    veterinarianCrmv: String
+    vaccineName: string,
+    vaccineBatchNumber: string,
+    vaccineManufacturer: string,
+    vaccinationDate: string,
+    nextAdministration: string,
+    veterinarianName:string,
+    veterinarianCrmv: string
 }
 
 function VaccinationContainer({ 
@@ -17,14 +17,14 @@ function VaccinationContainer({
     vaccineBatchNumber,
     vaccineManufacturer,
     vaccinationDate,
-    nextShot,
+    nextAdministration,
     veterinarianName,
     veterinarianCrmv}: VaccinationProps) {
     return(
         <div className="rounded-lg bg-gray-200 shadow-sm shadow-cyan-200 ">
             <div className="flex bg-indigo-50 rounded-md">
                 <VaccineInfo vaccineName={vaccineName} vaccineBatchNumber={vaccineBatchNumber} vaccineManufacturer={vaccineManufacturer}/>
-                <VaccinationDates date={vaccinationDate} nextShot={nextShot}/> 
+                <VaccinationDates date={vaccinationDate} nextShot={nextAdministration}/> 
             </div>
             <VeterinarianInfo name={veterinarianName} crmv={veterinarianCrmv}/>    
         </div>
