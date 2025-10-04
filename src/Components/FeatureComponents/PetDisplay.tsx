@@ -10,15 +10,17 @@ type Pet = {
     id: number;
     name: string;
     imageUrl: string;
-    active: boolean;
+    active?: boolean;
 }
 interface PetProps {
+    selectedPet: number;
     petsList: Pet[];
     setSelectedPet: React.Dispatch<React.SetStateAction<number>>;
 }
-export function PetDisplay ( { petsList, setSelectedPet }: PetProps){
+export function PetDisplay ( { petsList, setSelectedPet, selectedPet }: PetProps){
     const [open, setOpen] = useState(false);
     const petsData = petsList.map((pet) => ({id: pet.id, name: pet.name}));
+    const petDisplay = petsList.filter((pet) => pet.id == selectedPet);
     return (
         <div className="flex justify-around rounded-lg bg-white">
             <div className="flex flex-col justify-end pb-4"
@@ -27,7 +29,7 @@ export function PetDisplay ( { petsList, setSelectedPet }: PetProps){
             <AddButton />
 
             </div>
-            <ActivePet name={"sushi"} image_url={link} />
+            <ActivePet name={petDisplay[0].name} image_url={link} />
             {
                 open && <AddPetForm setOpen={setOpen}/>
             }        
