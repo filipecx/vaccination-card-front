@@ -1,20 +1,20 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { PetDisplay } from "../FeatureComponents/PetDisplay";
 import VaccinationContainer from "../FeatureComponents/VaccinationContainer";
 import axios from "axios";
 
 function Home () {
-    
-   const vaccinationInfo = {
-    name: 'Polivalente',
-    date: '02/10/2025',
-    dateNext: '02/10/2026',
-    vaccineBatchNumber: '342',
-    vaccineManufacturer: 'Biovac',
-    veterinarianName: 'Hugo',
-    veterinarianCrmv: '1234'
+    const [selectedPet, setSelectedPet] = useState<number>(0)
+    const vaccinationInfo = {
+        name: 'Polivalente',
+        date: '02/10/2025',
+        dateNext: '02/10/2026',
+        vaccineBatchNumber: '342',
+        vaccineManufacturer: 'Biovac',
+        veterinarianName: 'Hugo',
+        veterinarianCrmv: '1234'
 
-   }
+    }
 
    const petArray = [
     {
@@ -37,7 +37,6 @@ function Home () {
     },
         
     ]
-
    const fetchPets = async ()  => {
     try {
         const response = await axios.get(`http://localhost:8080/pets/actives`)
@@ -49,14 +48,15 @@ function Home () {
    }
 
    useEffect(() => {
+    setSelectedPet(petArray[0].id);
     fetchPets();
    }, [])
 
 
     return (
         <div className="flex flex-col w-full lg:w-1/4 m-6 lg:mx-40 gap-4">
-            <h1 className="text-3xl font-bold underline">Welcome</h1>
-            <PetDisplay petsList={petArray}/>
+            <h1 className="text-3xl font-bold underline">{selectedPet}</h1>
+            <PetDisplay petsList={petArray} setSelectedPet={setSelectedPet}/>
             <VaccinationContainer 
             vaccineName={vaccinationInfo.name}
             vaccinationDate={vaccinationInfo.date}

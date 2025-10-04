@@ -1,14 +1,24 @@
-interface PetName {
-    nameList: string[];
+type Pet = {
+    id: number;
+    name: string;
 }
 
-export function SelectButton( { nameList }: PetName) {
+interface PetData {
+    pets: Pet[];
+    setSelectedPet: React.Dispatch<React.SetStateAction<number>>
+}
+
+export function SelectButton( { pets, setSelectedPet }: PetData) {
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedPet(Number(e.target.value))
+        console.log(e.target.value)
+    }
     return (
         <div className=" flex flex-col justify-end pb-4">
-            <select name="select_pet" id="select_pet">
+            <select name="select_pet" id="select_pet" onChange={handleChange}>
                 {
-                    nameList.map((name) => {return (
-                        <option value={name}>{name}</option>
+                    pets.map((pet) => {return (
+                        <option value={pet.id}>{pet.name}</option>
                     )})
                 }
             </select>

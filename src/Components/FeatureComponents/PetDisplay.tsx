@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { AddButton } from "../UIComponents/AddButton"
 import { SelectButton } from "../UIComponents/SelectButton"
 import { ActivePet } from "./ActivePet"
@@ -14,10 +14,11 @@ type Pet = {
 }
 interface PetProps {
     petsList: Pet[];
+    setSelectedPet: React.Dispatch<React.SetStateAction<number>>;
 }
-export function PetDisplay ( { petsList }: PetProps){
+export function PetDisplay ( { petsList, setSelectedPet }: PetProps){
     const [open, setOpen] = useState(false);
-    const names = petsList.map((pet) => pet.name);
+    const petsData = petsList.map((pet) => ({id: pet.id, name: pet.name}));
     return (
         <div className="flex justify-around rounded-lg bg-white">
             <div className="flex flex-col justify-end pb-4"
@@ -30,7 +31,7 @@ export function PetDisplay ( { petsList }: PetProps){
             {
                 open && <AddPetForm setOpen={setOpen}/>
             }        
-            <SelectButton nameList={names}/>
+            <SelectButton setSelectedPet={setSelectedPet} pets={petsData}/>
         </div>
     )
 }
