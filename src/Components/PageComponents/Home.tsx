@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { PetDisplay } from "../FeatureComponents/PetDisplay";
 import VaccinationContainer from "../FeatureComponents/VaccinationContainer";
 import axios from "axios";
-
+const url = import.meta.env.VITE_API_URL;
 interface VaccinationInterface {
             id: number;
             vaccineName: string;
@@ -17,13 +17,14 @@ interface VaccinationInterface {
 }
 
 interface PetInteface {
+    active: boolean;
     id: number;
     name: string;
     imageUrl: string;
 }
 
 function Home () {
-    const [selectedPet, setSelectedPet] = useState<number>(0)
+    const [selectedPet, setSelectedPet] = useState<PetInteface>()
     const [pets, setPets] = useState<PetInteface[]>([])
     const [vaccinationInfo, setVaccinationInfo] = useState<VaccinationInterface[]>([])
     /*
@@ -61,17 +62,17 @@ function Home () {
     ]
    const fetchPets = async ()  => {
     try {
-        const response = await axios.get(`http://localhost:8080/pets/actives`)
-        const data = response.data
+        const response = await axios.get(url + `/pets`)
+        const data = await response.data
         setPets(data);
-        console.log(data)
+        if (data.length > 0) setSelectedPet(data[0]);
     } catch (error) {
         console.error(error);
     }
    }
    const fetchVaccination = async (id: number) => {
     try {
-        const response = await axios.get(`http://localhost:8080/vaccinations/${id}`)
+        const response = await axios.get(url + `/vaccinations/${id}`)
         const data = response.data;
         setVaccinationInfo(Array.isArray(data) ? data : [data]);
         console.log(data);
@@ -80,22 +81,31 @@ function Home () {
     }
    }
 
-   useEffect(() => {
+   useEffect(()  => {
+    console.log("primeiro effect")
     fetchPets();
-    setSelectedPet(petArray[0].id);
+    setSelectedPet(selectedPet);
+    
+    
    }, []);
 
    useEffect(() => {
     if (!selectedPet) return;
     setVaccinationInfo([]);
-    fetchVaccination(selectedPet);
+    
+    fetchVaccination(selectedPet.id);
    }, [selectedPet]);
 
 
     return (
         <div className="flex flex-col w-full lg:w-1/4 m-6 lg:mx-40 gap-4">
             <h1 className="text-3xl font-bold">Carteirinha de vacinação</h1>
-            <PetDisplay petsList={pets} setSelectedPet={setSelectedPet} selectedPet={selectedPet}/>        
+           
+            {pets.length > 0 ?
+            
+            <PetDisplay petsList={pets} setSelectedPet={setSelectedPet} selectedPet={selectedPet} setPets={setPets}/>
+            : <p>... loading</p>        }
+
             {vaccinationInfo.length > 0 ? 
             vaccinationInfo.map((vaccination) => {
                 return (
