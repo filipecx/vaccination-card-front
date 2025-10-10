@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { PetDisplay } from "../FeatureComponents/PetDisplay";
 import VaccinationContainer from "../FeatureComponents/VaccinationContainer";
 import axios from "axios";
+import { AddVaccinationForm } from "../FeatureComponents/AddVaccinationForm";
 const url = import.meta.env.VITE_API_URL;
 interface VaccinationInterface {
             id: number;
@@ -70,9 +71,10 @@ function Home () {
         console.error(error);
     }
    }
-   const fetchVaccination = async (id: number) => {
+   const fetchVaccination = async () => {
+    console.log("petid vaccination" + selectedPet?.id)
     try {
-        const response = await axios.get(url + `/vaccinations/${id}`)
+        const response = await axios.get(url + `/vaccinations/${selectedPet?.id}`)
         const data = response.data;
         setVaccinationInfo(Array.isArray(data) ? data : [data]);
         console.log(data);
@@ -123,6 +125,8 @@ function Home () {
             })          
             : <p>Não há vacinações registradas para esse pet!</p>
             }
+            {selectedPet?.id}
+            <AddVaccinationForm petId={selectedPet?.id} vaccinationInfo={vaccinationInfo} setVaccinationInfo={setVaccinationInfo}/>
         </div>
     )
 }
