@@ -71,10 +71,10 @@ function Home () {
         console.error(error);
     }
    }
-   const fetchVaccination = async () => {
-    console.log("petid vaccination" + selectedPet?.id)
+   const fetchVaccination = async (id: number) => {
+    console.log("petid vaccination: " + id)
     try {
-        const response = await axios.get(url + `/vaccinations/${selectedPet?.id}`)
+        const response = await axios.get(url + `/vaccinations/nextShot/${id}`)
         const data = response.data;
         setVaccinationInfo(Array.isArray(data) ? data : [data]);
         console.log(data);
