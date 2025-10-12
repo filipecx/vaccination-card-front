@@ -3,6 +3,7 @@ import { PetDisplay } from "../FeatureComponents/PetDisplay";
 import VaccinationContainer from "../FeatureComponents/VaccinationContainer";
 import axios from "axios";
 import { AddVaccinationForm } from "../FeatureComponents/AddVaccinationForm";
+import { AddPet } from "../FeatureComponents/AddPet";
 const url = import.meta.env.VITE_API_URL;
 interface VaccinationInterface {
             id: number;
@@ -106,12 +107,13 @@ function Home () {
             {pets.length > 0 ?
             
             <PetDisplay petsList={pets} setSelectedPet={setSelectedPet} selectedPet={selectedPet} setPets={setPets}/>
-            : <p>... loading</p>        }
+            : <AddPet petsList={pets} setPets={setPets}/>}
 
             {vaccinationInfo.length > 0 ? 
             vaccinationInfo.map((vaccination) => {
                 return (
-                <VaccinationContainer 
+                <VaccinationContainer
+                vaccinationId={vaccination.id} 
                 vaccineName={vaccination.vaccineName}
                 vaccinationDate={vaccination.date}
                 nextAdministration={vaccination.nextAdministration}
@@ -125,7 +127,6 @@ function Home () {
             })          
             : <p>Não há vacinações registradas para esse pet!</p>
             }
-            {selectedPet?.id}
             <AddVaccinationForm petId={selectedPet?.id} vaccinationInfo={vaccinationInfo} setVaccinationInfo={setVaccinationInfo}/>
         </div>
     )

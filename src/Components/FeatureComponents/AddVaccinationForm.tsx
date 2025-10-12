@@ -39,8 +39,10 @@ export function AddVaccinationForm({ petId, vaccinationInfo, setVaccinationInfo 
     }
 
     return (
-        <div>
-            <button type="button" onClick={() => setAddOpen(addOpen => !addOpen)}>Add vacubatuib</button>
+        <div className="flex justify-end">
+            <button type="button"
+                className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 font-semibold"
+                onClick={() => setAddOpen(addOpen => !addOpen)}>Registrar vacinação</button>
             {addOpen &&
                 <div className="fixed inset-0 flex items-center justify-center z-50">
                     <div className="absolute inset-0 bg-black opacity-45"

@@ -1,5 +1,6 @@
 import axios from "axios"
 const url = import.meta.env.VITE_API_URL;
+import { FaTrash } from "react-icons/fa";
 
 export function RemoveButton( { petId }: any ) {
     const removePet =  async (petId: number) => {
@@ -15,7 +16,7 @@ export function RemoveButton( { petId }: any ) {
         onClick={() => removePet(petId)}
         className="flex items-center justify-center
          lg:hover:bg-blue-100 lg:hover:text-white 
-         shadow-md rounded-full w-12 h-12">{petId}</button>
+         shadow-md rounded-full w-12 h-12"><FaTrash /></button>
             
     )
 }
